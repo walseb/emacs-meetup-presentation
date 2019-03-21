@@ -1,0 +1,276 @@
+* Ideal emacs
+** For what
+
+* Why
+Life is meaningless, dust to dust, life is suffering, give up, humans can't understand the real world
+Why spend time learning emacs
+[[file:images/painting.jpg]]
+
+** Minimal effort for maximum pay
+Why work more than neccesary
+Why work hard
+
+** Source of happieness
+*** Money
+*** Holidays
+*** Travel
+*** Productive work
+Makes happiness possible
+
+* Increasing productivity
+** Possible limitations
+*** Passion
+*** Problem solving ability
+seeing patterns, etc
+**** Tools
+-math
+-physics
+-etc
+*** Implementation of the solution
+E.g Programming languages
+99% of school
+*** Writing it down
+- Visualisation
+    - editor
+- Writing
+    - Editor
+    - Keyboard
+    - Keyboard layout
+
+* Why emacs
+Why not vim, or any pre-made solution
+** Config purity
+Installed on every system
+Peer programming
+Productivity?
+
+** Overcoming habits
+Habits as incurable diseases
+
+* Ideal emacs
+** Navigation
+*** Navigating to text out of sight
+**** Scroll until you find it
+**** Isearch
+**** Swiper and equivalents
+
+*** Navigating to text in sight
+**** Line numbers
+**** Relative line numbers
+**** Avy
+**** Isearch
+**** my attempt
+https://github.com/walseb/QualityEmacsConfig#isearch-screen
+
+*** Perception of current position
+**** Line numbers
+**** Mode line percent
+[[file:images/modelinenumber.png]]
+
+**** Mode line Widget
+**** Scrollbar
+**** Yascroll
+*** Navigating structure
+**** Lisp structure
+#+BEGIN_SRC emacs-lisp
+(defun tetris-init-buffer ()
+  (gamegrid-init-buffer tetris-buffer-width
+                        tetris-buffer-height
+                        tetris-space)
+  (let ((buffer-read-only nil))
+    (if (tetris-draw-border-p)
+        (cl-loop for y from -1 to tetris-height do
+                 (cl-loop for x from -1 to tetris-width do
+                          (gamegrid-set-cell (+ tetris-top-left-x x)
+                                             (+ tetris-top-left-y y)
+                                             tetris-border))))
+    (dotimes (y tetris-height)
+      (dotimes (x tetris-width)
+        (gamegrid-set-cell (+ tetris-top-left-x x)
+                           (+ tetris-top-left-y y)
+                           tetris-blank)))
+    (if (tetris-draw-border-p)
+        (cl-loop for y from -1 to 4 do
+                 (cl-loop for x from -1 to 4 do
+                          (gamegrid-set-cell (+ tetris-next-x x)
+                                             (+ tetris-next-y y)
+                                             tetris-border))))))
+#+END_SRC
+***** The lisp structure is a tree
+[[file:images/tree.png]]
+
+****** Navigation of trees using lispy
+There are also built in commands
+
+**** Other language structures
+Indent based movement using
+https://github.com/walseb/QualityEmacsConfig#navigate-indent
+#+BEGIN_SRC csharp
+  private void MyTaskWorker(string[] files, MyAsyncContext asyncContext, out bool cancelled)
+  {
+      cancelled = false;
+
+      foreach (string file in files)
+      {
+          // a time consuming operation with a file (compression, encryption etc.)
+          Thread.Sleep(1000);
+
+          if (asyncContext.IsCancelling)
+          {
+              cancelled = true;
+              return;
+          }
+      }
+
+      foreach (string file in files)
+      {
+          // a time consuming operation with a file (compression, encryption etc.)
+          Thread.Sleep(1000);
+
+          if (asyncContext.IsCancelling)
+          {
+              cancelled = true;
+              return;
+          }
+      }
+
+      foreach (string file in files)
+      {
+          // a time consuming operation with a file (compression, encryption etc.)
+          Thread.Sleep(1000);
+
+          if (asyncContext.IsCancelling)
+          {
+              cancelled = true;
+              return;
+          }
+      }
+  }
+
+#+END_SRC
+
+
+** Scriptable edits
+Macros vs functions
+Combination of the two
+
+*** Occur
+**** Swiper
+
+*** Dired
+*** Wdired
+*** Evil visual A and I
+With evil-mc
+
+*** Images
+Using blimp
+*** Files
+
+** Visualization
+*** Repl
+#+BEGIN_SRC emacs-lisp
+  (defun my/add (a b)
+    (+ a b))
+
+  (defun my/square (a b)
+    (cons (* a a) (* b b)))
+
+  (my/square 2 5)
+#+END_SRC
+
+*** Litable
+#+BEGIN_SRC emacs-lisp
+  (defun my/add (a b)
+    (+ a b))
+
+  (defun my/square (a b)
+    (cons (* a a) (* b b)))
+
+  (my/square 2 5)
+#+END_SRC
+
+*** Overview/abstraction
+An overview of a problem requires abstraction
+What is abstraction
+We can't take every little detail into account
+Mutability
+
+**** Outlines
+Optional, should mark dividing lines in large files
+Modified outshine/outline minor mode, literate programming
+
+**** Folding
+Mandatory at every function
+Not that useful in languages without inline function declaration
+
+***** Origami
+Good support for certain languages
+Slow
+
+***** Yafolding
+Universal
+
+***** Hide show
+Good support for certain languages
+Very fast
+
+
+** Editing
+*** Text objects
+**** Evil-mode or objed
+
+** Using on windows
+*** Native binaries
+Slow, hard to get dependencies, some things (exwm for example) doesn't work
+
+*** Virtual machines
+Syncing with windows (unison)
+
+**** Hyper-v
+Input latency, bad performance
+
+**** virtualbox
+Least input latency, bad performance
+
+**** Docker
+Same like the others
+
+*** Cygwin, etc
+Easier to get dependencies but not complete
+
+*** WSL with x11 forwarding
+Full linux install, easy to get it setup just like in linux
+No videos, but pretty much no input latency and native emacs performance
+
+** Fixing programming language syntax
+Prettify symbols mode using https://github.com/walseb/QualityEmacsConfig#comment-to-symbols
+*** Syntax
+#+BEGIN_SRC emacs-lisp
+  (defun )
+#+END_SRC
+
+*** Comments
+Csharp style comments
+
+#+BEGIN_SRC csharp
+  //
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+//
+#+END_SRC
+
+Elisp style comments
+
+#+BEGIN_SRC csharp
+;;
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;;
+#+END_SRC
+
+** Password management
+*** Pass
+*** Keepass
+*** GPG encrypted org file
